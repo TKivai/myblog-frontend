@@ -43,44 +43,5 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <script>
-      try{
-        // fetch('http://localhost:3000/posts', {mode:'cors'})
-        fetch('http://localhost:4000/posts')
-          .then(data => {
-            return data.json(); 
-          })
-          .then(posts => { 
-            var blog_post_container = document.getElementById("blog_posts_container");
-            posts.forEach(post => {
-              console.log(post.title);
-              var node = document.createElement("div");
-              var postHtml = `<div class="col-md-6">
-                  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                      <div className="col p-4 d-flex flex-column position-static">
-                          <h3 class="mb-0">${post.title} </h3>
-                          <div class="mb-1 text-muted">  </div>
-                          <hr class="my-1"/>
-                          <p class="card-text mb-auto"> ${post.body} </p>
-                          <a href="/posts/${post.id}" class="stretched-link mt-1" >Read Full Post</a>
-                      </div>
-                  </div>
-              </div>` ;                
-              node.innerHTML = postHtml;
-              // node.appendChild(textnode);
-              // blog_post_container.appendChild(postHtml);
-              blog_post_container.appendChild(node);
-            });
-             
-          })
-          .catch (err => {
-            console.log("Error");
-            console.log(err);
-          });
-      } catch (err) {
-        console.log("Error");
-        console.log(err);
-      }
-    </script>
   </body>
 </html>
