@@ -5,12 +5,15 @@ import {BrowserRouter} from 'react-router-dom'
 import './index.css';
 import './bootstrap.min.css';
 import App from './App';
+import { UserContextProvider } from './store/UserContext'
 // Put any other imports below so that CSS from your
 // components takes precedence over default styles.
 
 ReactDOM.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>,
+    <UserContextProvider>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </UserContextProvider>,
     document.getElementById('root')
  );

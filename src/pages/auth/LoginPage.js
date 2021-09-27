@@ -1,8 +1,13 @@
-import LoginForm from '../../components/LoginForm';
 import { useHistory } from 'react-router-dom';
+import {useContext} from 'react';
+import UserContext from '../../store/UserContext';
+
+import LoginForm from '../../components/LoginForm';
+
 
 function LoginPage () {
     const history = useHistory();
+    const usercontext = useContext(UserContext);
     function loginUser (loginData) {
         const options = {
             method: 'POST',
@@ -25,7 +30,9 @@ function LoginPage () {
                 return response.json();
             })
             .then(update => {
-                console.log(update.token);
+                console.log(update.user.name);
+                usercontext.setUser(update.user.name);
+                usercontext.setEmail(update.user.email);
                 // document.cookie = `token=${update.token};SameSite=Lax`
                 // console.log(document.cookie);
                 history.push('/posts');
