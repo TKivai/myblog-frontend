@@ -1,30 +1,35 @@
 import {Route, Switch} from 'react-router-dom';
 
+// import WelcomePage from './pages/WelcomePage';
 import PostsPage from './pages/PostsPage';
-import WelcomePage from './pages/WelcomePage';
 import CreatePostsPage from './pages/CreatePostPage';
 import PostPage from './pages/PostPage';
 
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 
-
-
-import PostComponent from './components/PostComponent';
 import HeaderBar from './components/HeaderBar';
 function App() {
   return (
     <div className="page_content">
       <HeaderBar/>
       <Switch>
-        <Route path='/'>
+        <Route path='/' exact>
+          <LoginPage/>
+        </Route>
+        <Route path='/users/login' exact>
+          <LoginPage/>
+        </Route>
+        <Route path='/users/register' exact>
+          <RegisterPage/>
+        </Route>
+        <Route path='/posts' exact>
           <PostsPage/>
         </Route>
         <Route path='/posts/create'>
           <CreatePostsPage/>
         </Route>
-        <Route path='/post/postid'>
-          <PostPage/>
+        <Route path='/posts/:postid' exact component={PostPage}>
         </Route>
       </Switch>
     </div>

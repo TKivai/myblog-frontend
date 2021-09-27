@@ -1,12 +1,14 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import PostComponent from '../components/PostComponent';
+import PageLoadingComponent from '../components/PageLoading';
 
 function PostsPage () {
 
     const [isLoading, setIsLoading] = useState(true);
     const [loadedPosts, setloadedPosts] = useState([]);
 
-    fetch('http://localhost:4000/posts')
+    useEffect(() => {
+        fetch('http://localhost:4000/posts',{   credentials: 'include'})
         .then(response => {
             return response.json(); 
         })
@@ -15,15 +17,15 @@ function PostsPage () {
             setloadedPosts(posts); 
         })
         .catch (err => {
-            console.log("Error");
+            console.log("Err");
             console.log(err);
         });
+    },
+    []);
     
     if(isLoading){
         return (
-            <div className="spinner-grow text-primary" role="status">
-                <span className="sr-only">Loading...</span>
-            </div>
+            <PageLoadingComponent/>
         );
     }
 
@@ -31,7 +33,7 @@ function PostsPage () {
         <div className="" id="blog_posts_container" >
             {
                 loadedPosts.map((loadedPost) => {
-                    return <PostComponent post={loadedPost} />
+                    return <PostComponent post={loadedPost} showFullLink={true} key={loadedPost._id}/>
                 })
             }
         </div>
