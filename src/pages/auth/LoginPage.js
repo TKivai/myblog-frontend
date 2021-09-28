@@ -21,7 +21,8 @@ function LoginPage () {
 
         // console.log(userData);
 
-        fetch('http://localhost:4000/users/login', options)
+        // fetch('http://localhost:4000/users/login', options)
+        fetch('https://appblog-nodejs.herokuapp.com/users/login', options)
             .then(response => {
                 if (!response.ok) {
                     throw Error(response.status);
@@ -36,8 +37,6 @@ function LoginPage () {
                 localStorage.setItem("username", update.user.name);
                 localStorage.setItem("useremail", update.user.email);
                 localStorage.setItem("userisloggedin", true);
-                // document.cookie = `token=${update.token};SameSite=Lax`
-                // console.log(document.cookie);
                 history.replace('/posts');
             })
             .catch(e => {

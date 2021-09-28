@@ -8,7 +8,8 @@ function PostsPage () {
     const [loadedPosts, setloadedPosts] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:4000/posts',{credentials: 'include'})
+        // fetch('http://localhost:4000/posts',{credentials: 'include'})
+        fetch('https://appblog-nodejs.herokuapp.com/posts',{credentials: 'include'})
         .then(response => {
             return response.json(); 
         })

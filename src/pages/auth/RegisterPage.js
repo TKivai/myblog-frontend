@@ -6,6 +6,8 @@ function RegisterPage () {
     function addUser (userData) {
         const options = {
             method: 'POST',
+            withCredentials: true,
+            credentials: 'include',
             headers: {
             'Content-Type': 'application/json',
             },
@@ -14,7 +16,8 @@ function RegisterPage () {
 
         // console.log(userData);
 
-        fetch('http://localhost:4000/users/register', options)
+        // fetch('http://localhost:4000/users/register', options)
+        fetch('https://appblog-nodejs.herokuapp.com/users/register', options)
             .then(response => {
                 if (!response.ok) {
                     throw Error(response.status);
