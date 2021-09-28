@@ -1,4 +1,4 @@
-import styles from '../css/PageLoading.module.css'
+import styles from '../css/components/PageLoading.module.css'
 
 function PageLoadingComponent () {
     return (

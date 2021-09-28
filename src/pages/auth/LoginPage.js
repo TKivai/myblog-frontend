@@ -30,9 +30,12 @@ function LoginPage () {
                 return response.json();
             })
             .then(update => {
-                console.log(update.user.name);
+                usercontext.setIsLoggedIn(true);
                 usercontext.setUser(update.user.name);
                 usercontext.setEmail(update.user.email);
+                localStorage.setItem("username", update.user.name);
+                localStorage.setItem("useremail", update.user.name);
+                localStorage.setItem("userisloggedin", true);
                 // document.cookie = `token=${update.token};SameSite=Lax`
                 // console.log(document.cookie);
                 history.push('/posts');

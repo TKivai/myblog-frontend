@@ -1,6 +1,6 @@
 import {Route, Switch} from 'react-router-dom';
 
-// import WelcomePage from './pages/WelcomePage';
+import WelcomePage from './pages/WelcomePage';
 import PostsPage from './pages/PostsPage';
 import CreatePostsPage from './pages/CreatePostPage';
 import PostPage from './pages/PostPage';
@@ -15,7 +15,7 @@ function App() {
       <HeaderBar/>
       <Switch>
         <Route path='/' exact>
-          <LoginPage/>
+          <WelcomePage/>
         </Route>
         <Route path='/users/login' exact>
           <LoginPage/>

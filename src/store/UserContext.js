@@ -1,19 +1,19 @@
 import {createContext, useState} from 'react';
 
-import WelcomePage from '../pages/WelcomePage'
-import HeaderBar from '../components/HeaderBar';
-import LoginPage from '../pages/auth/LoginPage';
-
 const UserContext = createContext({
-    name: "",
-    email: "",
+    isLoggedIn: false,
+    name: null,
+    email: null,
     setUser:(userName) => {},
-    setEmail:(userEmail) => {}
+    setEmail:(userEmail) => {},
+    setIsLoggedIn: (logged_in) => {}
 });
 
 export function UserContextProvider (props) {
-    const [userName, setUserName] = useState("");
-    const [userEmail, setUserEmail] = useState("");
+    const isTrueSet = (localStorage.getItem("userisloggedin") === 'true');
+    const [isLoggedIn, setIsLoggedIn] = useState(isTrueSet);
+    const [userName, setUserName] = useState(localStorage.getItem("username"));
+    const [userEmail, setUserEmail] = useState(localStorage.getItem("useremail"));
 
     function setUserNameHandler (user_name) {
         setUserName(user_name);
@@ -22,11 +22,17 @@ export function UserContextProvider (props) {
         setUserEmail(user_email);
     }
 
+    function setisLoggedInHandler (logged_in) {
+        setIsLoggedIn(logged_in);
+    }
+
     const context = {
+        isLoggedIn: isLoggedIn,
         name: userName,
         email: userEmail,
         setUser: setUserNameHandler,
-        setEmail: setUserEmailHandler
+        setEmail: setUserEmailHandler,
+        setIsLoggedIn: setisLoggedInHandler
     }
 
     return (
