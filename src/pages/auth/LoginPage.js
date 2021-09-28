@@ -34,6 +34,7 @@ function LoginPage () {
                 usercontext.setIsLoggedIn(true);
                 usercontext.setUser(update.user.name);
                 usercontext.setEmail(update.user.email);
+                document.cookie = 'token='+ update.token +'; Path=/;';
                 localStorage.setItem("username", update.user.name);
                 localStorage.setItem("useremail", update.user.email);
                 localStorage.setItem("userisloggedin", true);
