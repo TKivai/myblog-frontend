@@ -6,8 +6,6 @@ function RegisterPage () {
     function addUser (userData) {
         const options = {
             method: 'POST',
-            withCredentials: true,
-            credentials: 'include',
             headers: {
             'Content-Type': 'application/json',
             },

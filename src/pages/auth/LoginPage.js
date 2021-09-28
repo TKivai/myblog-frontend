@@ -38,7 +38,7 @@ function LoginPage () {
                 localStorage.setItem("username", update.user.name);
                 localStorage.setItem("useremail", update.user.email);
                 localStorage.setItem("userisloggedin", true);
-                history.replace('/posts');
+                history.replace('/');
             })
             .catch(e => {
                 console.log("Response");
