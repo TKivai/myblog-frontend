@@ -10,10 +10,10 @@ const UserContext = createContext({
 });
 
 export function UserContextProvider (props) {
-    const isTrueSet = (localStorage.getItem("userisloggedin") === 'true');
-    const [isLoggedIn, setIsLoggedIn] = useState(isTrueSet);
-    const [userName, setUserName] = useState(localStorage.getItem("username"));
-    const [userEmail, setUserEmail] = useState(localStorage.getItem("useremail"));
+    // const isTrueSet = (localStorage.getItem("userisloggedin") === 'true');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userName, setUserName] = useState("");
+    const [userEmail, setUserEmail] = useState("");
 
     function setUserNameHandler (user_name) {
         setUserName(user_name);

@@ -1,15 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {useContext} from 'react';
 import UserContext from '../store/UserContext';
 import NavBarUserInfo from "./NavBarUserInfo";
 
+
 function HeaderBar () {
+    const history = useHistory();
     const usercontext = useContext(UserContext);
     const isLoggedIn = usercontext.isLoggedIn;
     let username;
 
     if (usercontext.name == null) username = "";
     else username = usercontext.name.split(' ')[0];
+
+    function logout () {
+        document.cookie = 'token=; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        localStorage.clear();
+        usercontext.setIsLoggedIn = false;
+        history.push('/');
+    }
 
     function NavLinkControl (props) {
         if (props.isLoggedIn){
@@ -33,8 +42,8 @@ function HeaderBar () {
             return (
                 <div style={{display: "contents"}}>
                     <NavBarUserInfo user={props.username}/>
-                    <form action="/users/logout" method="post">
-                        <button className="btn btn-danger" type="submit">Logout</button>
+                    <form>
+                        <button className="btn btn-danger" onSubmit={logout}>Logout</button>
                     </form>
                 </div>
             );
@@ -46,6 +55,8 @@ function HeaderBar () {
             </div>
         );
     }
+
+    
     
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary" style={{width: "100%"}}>

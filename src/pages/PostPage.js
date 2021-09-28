@@ -5,16 +5,22 @@ import PostComponent from '../components/PostComponent';
 function PostPage (props) {
     const [isLoading, setIsLoading] = useState(true);
     const [loadedPost, setloadedPost] = useState([]);
+
+    const [canEdit, setCanEdit] = useState(false);
+    const [authorName, setAuthorName] = useState(true);
+
     const {postid} = props.match.params;
 
     useEffect(() => {
-        fetch(`http://localhost:4000/posts/${postid}`)
+        fetch(`http://localhost:4000/posts/${postid}`, {credentials: 'include'})
         .then(response => {
             return response.json(); 
         })
-        .then(post => {
+        .then(data => {
             setIsLoading(false);
-            setloadedPost(post); 
+            setloadedPost(data.post);
+            setCanEdit(data.canEdit);
+            setAuthorName(data.authorName);
         })
         .catch (err => {
             console.log("Error");
@@ -30,7 +36,7 @@ function PostPage (props) {
         );
     }
     return (
-        <PostComponent post={loadedPost} showFullLink={false}/>
+        <PostComponent post={loadedPost} showFullLink={false} canEdit={canEdit} authorName={authorName}/>
     );
 }
 
