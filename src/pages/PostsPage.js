@@ -1,15 +1,25 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import PostComponent from '../components/PostComponent';
 import PageLoadingComponent from '../components/PageLoading';
+import UserContext from '../store/UserContext';
+
 
 function PostsPage () {
 
     const [isLoading, setIsLoading] = useState(true);
     const [loadedPosts, setloadedPosts] = useState([]);
+    const usercontext = useContext(UserContext);
 
     useEffect(() => {
-        fetch('http://localhost:4000/posts',{credentials: 'include'})
-        // fetch('https://appblog-nodejs.herokuapp.com/posts',{credentials: 'include'})
+        const options = {
+            method: 'GET',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${usercontext.jwt}`
+            },
+        };
+        // fetch('http://localhost:4000/posts',options)
+        fetch('https://appblog-nodejs.herokuapp.com/posts',options)
         .then(response => {
             return response.json(); 
         })
@@ -22,7 +32,7 @@ function PostsPage () {
             console.log(err);
         });
     },
-    []);
+    [usercontext.jwt]);
     
     if(isLoading){
         return (

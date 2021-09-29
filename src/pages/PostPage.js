@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 // import {useParams} from 'react-router-dom';
 import PostComponent from '../components/PostComponent';
+import UserContext from '../store/UserContext';
 
 function PostPage (props) {
     const [isLoading, setIsLoading] = useState(true);
@@ -8,11 +9,19 @@ function PostPage (props) {
 
     const [canEdit, setCanEdit] = useState(false);
     const [authorName, setAuthorName] = useState(true);
-
+    const usercontext = useContext(UserContext);
     const {postid} = props.match.params;
 
     useEffect(() => {
-        fetch(`http://localhost:4000/posts/${postid}`, {credentials: 'include'})
+        const options = {
+            method: 'GET',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${usercontext.jwt}`
+            },
+        };
+        fetch(`https://appblog-nodejs.herokuapp.com/posts${postid}`, options)
+        // fetch(`http://localhost:4000/posts/${postid}`, options)
         .then(response => {
             return response.json(); 
         })
@@ -26,7 +35,7 @@ function PostPage (props) {
             console.log("Error");
             console.log(err);
         });
-    }, [postid]);
+    }, [postid,usercontext.jwt]);
     
     if(isLoading){
         return (

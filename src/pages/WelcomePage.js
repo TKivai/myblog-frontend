@@ -3,10 +3,9 @@ import UserContext from '../store/UserContext';
 
 function WelcomePage () {
     const usercontext = useContext(UserContext);
-    let username;
-
-    if (usercontext.name == null) username = "";
-    else username = usercontext.name.split(' ')[0];
+    let username = usercontext.name.split(' ')[0];
+    console.log(usercontext.name);
+    console.log(usercontext.jwt);
 
     return (
         <div className="" style={{height: "100vh", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>

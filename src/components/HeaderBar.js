@@ -2,7 +2,7 @@ import { Link, useHistory } from "react-router-dom";
 import {useContext} from 'react';
 import UserContext from '../store/UserContext';
 import NavBarUserInfo from "./NavBarUserInfo";
-import {Cookies, useCookies} from 'react-cookie';
+// import {Cookies, useCookies} from 'react-cookie';
 
 
 
@@ -10,25 +10,24 @@ function HeaderBar () {
     const history = useHistory();
     const usercontext = useContext(UserContext);
     const isLoggedIn = usercontext.isLoggedIn;
-    const [cookies, setCookie, removeCookie] = useCookies();
+    // const [cookies, setCookie, removeCookie] = useCookies();
     let username;
 
     if (usercontext.name == null) username = "";
     else username = usercontext.name.split(' ')[0];
 
     function logout () {
-        removeCookie('token', {
-            path: '/',
-            sameSite: "lax",
-            maxAge: 600
-        })
+        // removeCookie('token', {
+        //     path: '/',
+        //     sameSite: "lax",
+        //     maxAge: 600
+        // })
         localStorage.clear();
 
         usercontext.setIsLoggedIn(false);
         usercontext.setUser("");
         usercontext.setEmail("");
-        // usercontext.setIsLoggedIn = false;
-        console.log(usercontext.name);
+        usercontext.setJwt("");
         history.replace('/');
     }
 

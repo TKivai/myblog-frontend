@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom';
 import {useContext} from 'react';
 import UserContext from '../../store/UserContext';
 
-import {useCookies} from 'react-cookie';
+// import {useCookies} from 'react-cookie';
 
 import LoginForm from '../../components/LoginForm';
 
@@ -10,7 +10,7 @@ import LoginForm from '../../components/LoginForm';
 function LoginPage () {
     const history = useHistory();
     const usercontext = useContext(UserContext);
-    const [cookies, setCookie] = useCookies([]);
+    // const [cookies, setCookie] = useCookies(['token']);
     function loginUser (loginData) {
         const options = {
             method: 'POST',
@@ -24,8 +24,8 @@ function LoginPage () {
 
         // console.log(userData);
 
-        fetch('http://localhost:4000/users/login', options)
-        // fetch('https://appblog-nodejs.herokuapp.com/users/login', options)
+        // fetch('http://localhost:4000/users/login', options)
+        fetch('https://appblog-nodejs.herokuapp.com/users/login', options)
             .then(response => {
                 if (!response.ok) {
                     throw Error(response.status);
@@ -36,15 +36,16 @@ function LoginPage () {
                 usercontext.setIsLoggedIn(true);
                 usercontext.setUser(update.user.name);
                 usercontext.setEmail(update.user.email);
-                setCookie('token', update.token, {
-                    path: '/',
-                    sameSite: "lax",
-                    maxAge: 600
-                });
-                // document.cookie = 'token='+ update.token +'; Path=/; Secure';
+                usercontext.setJwt(update.token);
+                // setCookie('token', update.token, {
+                //     path: '/',
+                //     sameSite: "lax",
+                //     maxAge: 600
+                // });
                 localStorage.setItem("username", update.user.name);
                 localStorage.setItem("useremail", update.user.email);
                 localStorage.setItem("userisloggedin", true);
+                localStorage.setItem("token", update.token);
                 history.replace('/');
             })
             .catch(e => {
