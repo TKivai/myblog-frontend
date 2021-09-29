@@ -2,22 +2,34 @@ import { Link, useHistory } from "react-router-dom";
 import {useContext} from 'react';
 import UserContext from '../store/UserContext';
 import NavBarUserInfo from "./NavBarUserInfo";
+import {Cookies, useCookies} from 'react-cookie';
+
 
 
 function HeaderBar () {
     const history = useHistory();
     const usercontext = useContext(UserContext);
     const isLoggedIn = usercontext.isLoggedIn;
+    const [cookies, setCookie, removeCookie] = useCookies();
     let username;
 
     if (usercontext.name == null) username = "";
     else username = usercontext.name.split(' ')[0];
 
     function logout () {
-        document.cookie = 'token=; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        removeCookie('token', {
+            path: '/',
+            sameSite: "lax",
+            maxAge: 600
+        })
         localStorage.clear();
-        usercontext.setIsLoggedIn = false;
-        history.push('/');
+
+        usercontext.setIsLoggedIn(false);
+        usercontext.setUser("");
+        usercontext.setEmail("");
+        // usercontext.setIsLoggedIn = false;
+        console.log(usercontext.name);
+        history.replace('/');
     }
 
     function NavLinkControl (props) {
@@ -43,7 +55,7 @@ function HeaderBar () {
                 <div style={{display: "contents"}}>
                     <NavBarUserInfo user={props.username}/>
                     <form>
-                        <button className="btn btn-danger" onSubmit={logout}>Logout</button>
+                        <button className="btn btn-danger" onClick={logout}>Logout</button>
                     </form>
                 </div>
             );
