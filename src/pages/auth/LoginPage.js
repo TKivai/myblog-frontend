@@ -14,8 +14,6 @@ function LoginPage () {
     function loginUser (loginData) {
         const options = {
             method: 'POST',
-            withCredentials: true,
-            credentials: 'include',
             headers: {
             'Content-Type': 'application/json',
             },
@@ -24,8 +22,8 @@ function LoginPage () {
 
         // console.log(userData);
 
-        // fetch('http://localhost:4000/users/login', options)
-        fetch('https://appblog-nodejs.herokuapp.com/users/login', options)
+        fetch(`${process.env.REACT_APP_BASE_URL}/users/login`, options)
+        // fetch('https://appblog-nodejs.herokuapp.com/users/login', options)
             .then(response => {
                 if (!response.ok) {
                     throw Error(response.status);

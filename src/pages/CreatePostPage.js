@@ -1,7 +1,14 @@
-import {useRef} from 'react'
+import {useContext, useRef} from 'react';
+import UserContext from '../store/UserContext';
+import { useHistory } from 'react-router-dom';
+
+
+
 function CreatePostPage () {
+    const history = useHistory();
     const titleInputRef = useRef();
     const bodyInputRef = useRef();
+    const usercontext = useContext(UserContext);
 
     function submitPostHandler (event) {
         event.preventDefault();
@@ -15,17 +22,21 @@ function CreatePostPage () {
         const options = {
             method: 'POST',
             headers: {
-            'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${usercontext.jwt}`
             },
             body: JSON.stringify(postData),
         };
-
-        fetch('http://localhost:4000/posts/create', options)
+        fetch(`${process.env.REACT_APP_BASE_URL}/posts/create`, options)
             .then(response => {
-                if (!response.ok) {
-                    throw Error(response.status);
+                console.log(response.status);
+                if (response.status === 403) {
+                    usercontext.setJwt("");
+                    usercontext.setIsLoggedIn(false);
+                    localStorage.clear();
+                    history.replace('/users/login')
                 }
-                return response.json();
+                response.json();
             })
             .then(update => {
                 console.log(update);
@@ -33,7 +44,6 @@ function CreatePostPage () {
             .catch(e => {
                 console.log(e);
             });
-
     }
     return (
         <div className="" style={{width: "70%"}}>

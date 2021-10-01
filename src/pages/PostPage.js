@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
-// import {useParams} from 'react-router-dom';
 import PostComponent from '../components/PostComponent';
 import UserContext from '../store/UserContext';
+import PageLoadingComponent from '../components/PageLoading';
+
 
 function PostPage (props) {
     const [isLoading, setIsLoading] = useState(true);
@@ -20,8 +21,7 @@ function PostPage (props) {
             'Authorization': `Bearer ${usercontext.jwt}`
             },
         };
-        fetch(`https://appblog-nodejs.herokuapp.com/posts${postid}`, options)
-        // fetch(`http://localhost:4000/posts/${postid}`, options)
+        fetch(`${process.env.REACT_APP_BASE_URL}/posts/${postid}`, options)
         .then(response => {
             return response.json(); 
         })
@@ -39,13 +39,18 @@ function PostPage (props) {
     
     if(isLoading){
         return (
-            <div className="spinner-grow text-primary" role="status">
-                <span className="sr-only">Loading...</span>
-            </div>
+            <PageLoadingComponent/>
         );
     }
     return (
-        <PostComponent post={loadedPost} showFullLink={false} canEdit={canEdit} authorName={authorName}/>
+        <PostComponent
+         post={loadedPost}
+         showFullLink={false}
+         canEdit={canEdit}
+         authorName={authorName}
+         setLoadedPost={setloadedPost}
+         setCanEdit={setCanEdit}
+         setAuthorName={setAuthorName}/>
     );
 }
 

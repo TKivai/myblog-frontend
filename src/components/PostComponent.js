@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import EditPostComponent from "./EditPostComponent";
 
 function PostComponent(props) {
+    console.log(props)
 
     return (
         <div className="col-md-6" style={{padding: "1.5rem"}}>
@@ -13,6 +15,13 @@ function PostComponent(props) {
 
                     {props.showFullLink ? <Link to={`/posts/${props.post._id}`} className="stretched-link mt-1">Read Full Post</Link> : null}
                 </div>
+                {props.canEdit ? <EditPostComponent 
+                    post={props.post}
+                    setAuthorName={props.setAuthorName}
+                    setCanEdit={props.setCanEdit}
+                    setLoadedPost={props.setLoadedPost}
+                    /> 
+                    : null}
             </div>
         </div>
     );
