@@ -12,10 +12,7 @@ function RegisterPage () {
             body: JSON.stringify(userData),
         };
 
-        // console.log(userData);
-
-        // fetch('http://localhost:4000/users/register', options)
-        fetch('https://appblog-nodejs.herokuapp.com/users/register', options)
+        fetch(`${process.env.REACT_APP_BASE_URL}/users/register`, options)
             .then(response => {
                 if (!response.ok) {
                     throw Error(response.status);
