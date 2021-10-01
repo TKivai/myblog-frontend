@@ -71,7 +71,9 @@ function EditPostComponent (props) {
             })
             .then(update => {
                 console.log(update);
-                history.replace('/posts')
+                document.querySelector(".modal-backdrop").remove();
+                history.replace('/posts');
+                
             })
             .catch(e => {
                 console.log(e);

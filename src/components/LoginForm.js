@@ -39,7 +39,7 @@ function LoginForm (props) {
                 <input type="password" name="password" className="form-control" id="password" ref={passwordRef} placeholder="Password"/>
             </div>
 
-            <button className="btn btn-primary mt-4">Register</button>
+            <button className="btn btn-primary mt-4">Login</button>
         </form>
     );
 }
