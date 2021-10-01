@@ -41,7 +41,7 @@ function PostsPage () {
             console.log(err);
         });
     },
-    [usercontext.jwt]);
+    [usercontext.jwt, history, usercontext]);
     
     if(isLoading){
         return (

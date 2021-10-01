@@ -1,10 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import PostComponent from '../components/PostComponent';
 import UserContext from '../store/UserContext';
 import PageLoadingComponent from '../components/PageLoading';
 
 
 function PostPage (props) {
+    const history = useHistory();
     const [isLoading, setIsLoading] = useState(true);
     const [loadedPost, setloadedPost] = useState([]);
 
@@ -23,6 +25,12 @@ function PostPage (props) {
         };
         fetch(`${process.env.REACT_APP_BASE_URL}/posts/${postid}`, options)
         .then(response => {
+            if (response.status === 401 || response.status === 403) {
+                usercontext.setJwt("");
+                usercontext.setIsLoggedIn(false);
+                localStorage.clear();
+                history.replace('/users/login')
+            }
             return response.json(); 
         })
         .then(data => {
@@ -35,7 +43,7 @@ function PostPage (props) {
             console.log("Error");
             console.log(err);
         });
-    }, [postid,usercontext.jwt]);
+    }, [postid,usercontext.jwt, history, usercontext]);
     
     if(isLoading){
         return (
