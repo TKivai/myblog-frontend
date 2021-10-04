@@ -23,13 +23,12 @@ function App() {
         <Route path='/users/register' exact>
           <RegisterPage/>
         </Route>
-        <Route path='/posts' exact>
-          <PostsPage/>
-        </Route>
         <Route path='/posts/create'>
           <CreatePostsPage/>
         </Route>
-        <Route path='/posts/:postid' exact component={PostPage}>
+        <Route path='/posts/:postid' exact component={PostPage}/>
+        <Route path='/posts'>
+          <PostsPage/>
         </Route>
       </Switch>
     </div>
